@@ -27,35 +27,43 @@ public class Main {
 
 
         //COMPOSITE BLOCKS
-        var redCompositeBlock = new BasicCompositeBlock(redBrick, redStone);
-        var sandStoneBrickBlock = new BasicCompositeBlock(yellowSand, brownStone, blackBrick);
-        var sandCompositeBlockBlock = new BasicCompositeBlock(yellowSand, redCompositeBlock);
+        var redBrick_redStone = new BasicCompositeBlock(redBrick, redStone);
+        var blackWood_redStone = new BasicCompositeBlock(blackWood, redStone);
+        var yellowSand_brownStone_blackBrick = new BasicCompositeBlock(yellowSand, brownStone, blackBrick);
+        var yellowSand_redBrick_redStone = new BasicCompositeBlock(yellowSand, redBrick_redStone);
 
 
-        //WALL
-        Wall wall = new Wall(greyStone, blackStone, blackWood, sandCompositeBlockBlock);
+        //WALL Zakładam, że Wall może byc zbudowany z więcej niż jednego materiału
+        Wall wall = new Wall(greyStone, blackStone, blackWood, blackStone, blackWood_redStone, redBrick, yellowSand_redBrick_redStone);
 
 
-        //TESTS for Wall: Structure -> FindBlockByColor(), FindBlocksByMaterial(), count(),
-        System.out.println("Method -> FindBlockByColor()");
-            Optional<Block> redBlock = wall.findBlockByColor("Red");
-            redBlock.ifPresentOrElse(
-                    block -> System.out.println("Block found by color: " + block),
-                    () -> System.out.println("Block not found by color")
-            );
+        // TESTS for Wall: Structure ->
+        // FindBlockByColor()
+        var tmpColor = "Red";
+        System.out.println("\nAny _" + tmpColor + "_ color Block found in wall:");
+        Optional<Block> redBlock = wall.findBlockByColor(tmpColor);
+        redBlock.ifPresentOrElse(
+                color -> System.out.println("-> " + color),
+                () -> System.out.println("Block not found.")
+        );
 
-        System.out.println("\nMethod -> FindBlocksByMaterial()");
-            List<Block> blocksByMaterial = wall.findBlocksByMaterial("Stone");
-            System.out.println("Blocks found by material:");
-            blocksByMaterial.forEach(System.out::println);
+        // FindBlocksByMaterial()
+        var tmpMaterial = "Stone";
+        System.out.println("\nAll _" + tmpMaterial + "_ material Block found in wall:");
+        List<Block> blocksByMaterial = wall.findBlocksByMaterial(tmpMaterial);
+        blocksByMaterial.forEach((material) -> System.out.println("-> " + material));
 
+        // count(),
         System.out.println("\nMethod -> count()");
-            System.out.println("Total number of blocks in the wall: " + wall.count());
+        System.out.println("Total number of blocks in the wall: " + wall.count());
 
         //TESTS for CompositeBlock: Block -> getBlocks
-        System.out.println("\nCompositeBlock -> getBlocks()");
-        List<Block> allBlocks = sandStoneBrickBlock.getBlocks();
-            System.out.println("All blocks in the wall:");
-            allBlocks.forEach(System.out::println);
+        System.out.println("\nCompositeBlock yellowSand_brownStone_blackBrick -> getBlocks()");
+        List<Block> allBlocks = yellowSand_brownStone_blackBrick.getBlocks();
+        allBlocks.forEach(block -> System.out.println("->" + block));
+
+        System.out.println("\nCompositeBlock yellowSand_redBrick_redStone -> getBlocks()");
+        List<Block> allBlocks2 = yellowSand_redBrick_redStone.getBlocks();
+        allBlocks2.forEach(block -> System.out.println("->" + block));
     }
 }

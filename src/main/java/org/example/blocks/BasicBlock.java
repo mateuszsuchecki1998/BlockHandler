@@ -4,8 +4,6 @@ package org.example.blocks;
         2. dodać wystarczająco dużo klas rozszerzających BasicBlock
         3. mozna się pochylić nad wzorcem Builder lub Factory*/
 public class BasicBlock implements Block {
-
-    //todo color i material mogłyby być enumami
     private String color;
     private String material;
 
